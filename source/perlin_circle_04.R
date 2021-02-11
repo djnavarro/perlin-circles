@@ -70,12 +70,12 @@ shades <- sample_shades(6)
 
 perlin_circle_l <- lift_dl(perlin_circle)
 
-n_grid <- 20
+n_grid <- 30
 dat <- expand_grid(
   cx = seq(1, 10, length.out = n_grid),
   cy = seq(1, 10, length.out = n_grid),
-  r_min = .1,
-  r_max = .3,
+  r_min = .03,
+  r_max = .1,
   octaves = 1:4
 ) %>%
   mutate(r_max = r_max + octaves/16) %>%
