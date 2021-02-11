@@ -77,6 +77,7 @@ dat <- expand_grid(
   r_max = .2,
   octaves = 1:4
 ) %>%
+  mutate(r_max = r_max + octaves/16) %>%
   transpose() %>%
   imap_dfr(~ perlin_circle_l(.x) %>% mutate(id = .y))
 
