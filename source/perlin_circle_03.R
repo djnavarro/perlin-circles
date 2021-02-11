@@ -69,13 +69,19 @@ set.seed(seed)
 
 perlin_circle_l <- lift_dl(perlin_circle)
 
-dat <- expand_grid(cx = 1:10, cy = 1:10, r_min = .2, r_max = .35) %>%
+dat <- expand_grid(
+  cx = 1:10,
+  cy = 1:10,
+  r_min = .2,
+  r_max = .35,
+  octaves = 1:4
+) %>%
   transpose() %>%
   imap_dfr(~ perlin_circle_l(.x) %>% mutate(id = .y))
 
 pic <- dat %>%
   ggplot(aes(x, y, group = id, fill = sample(id))) +
-  geom_polygon(size = 0, show.legend = FALSE) +
+  geom_polygon(size = 0, alpha = .5, show.legend = FALSE) +
   theme_void() +
   theme(plot.background = element_rect(fill = bg)) +
   scale_x_continuous(expand = c(0, 0)) +
