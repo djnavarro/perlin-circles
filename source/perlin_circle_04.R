@@ -66,7 +66,7 @@ ylim <- c(0, 11)
 # generate image ----------------------------------------------------------
 
 set.seed(seed)
-shades <- sample_shades(3)
+shades <- sample_shades(6)
 
 perlin_circle_l <- lift_dl(perlin_circle)
 
