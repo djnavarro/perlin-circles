@@ -66,6 +66,7 @@ ylim <- c(0, 11)
 # generate image ----------------------------------------------------------
 
 set.seed(seed)
+shades <- sample_shades(3)
 
 perlin_circle_l <- lift_dl(perlin_circle)
 
@@ -88,7 +89,7 @@ pic <- dat %>%
   theme(plot.background = element_rect(fill = bg)) +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  scale_fill_gradientn(colours = sample_shades(3)) +
+  scale_fill_gradientn(colours = shades) +
   coord_fixed(xlim = xlim, ylim = ylim) +
   NULL
 
