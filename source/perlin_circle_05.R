@@ -53,52 +53,62 @@ perlin_circle <- function(cx = 0, cy = 0, n = 100, noise_max = 0.5,
 
 
 
-# plot parameters ---------------------------------------------------------
 
-seed <- 11
-sys_id <- "perlincircle"
-sys_version <- 5
+# generator function ------------------------------------------------------
 
-bg <- "black"
-xlim <- c(1, 10)
-ylim <- c(1, 10)
+generate_scene <- function(seed) {
 
-# generate image ----------------------------------------------------------
+  # plot parameters
 
-set.seed(seed)
-shades <- sample_shades(6)
+  sys_id <- "perlincircle"
+  sys_version <- 5
 
-perlin_circle_l <- lift_dl(perlin_circle)
+  bg <- "black"
+  xlim <- c(1, 10)
+  ylim <- c(1, 10)
 
-n_grid <- 30
-dat <- expand_grid(
-  cx = seq(1, 10, length.out = n_grid),
-  cy = seq(1, 10, length.out = n_grid),
-  r_min = .03,
-  r_max = .1,
-  octaves = 1:4
-) %>%
-  mutate(r_max = r_max + octaves/16) %>%
-  sample_frac(.2) %>%
-  transpose() %>%
-  imap_dfr(~ perlin_circle_l(.x) %>% mutate(id = .y))
+  # generate image data
 
-pic <- dat %>%
-  ggplot(aes(x, y, group = id, fill = sample(id))) +
-  geom_polygon(size = 0, alpha = .5, show.legend = FALSE) +
-  theme_void() +
-  theme(plot.background = element_rect(fill = bg)) +
-  scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous(expand = c(0, 0)) +
-  scale_fill_gradientn(colours = shades) +
-  coord_fixed(xlim = xlim, ylim = ylim) +
-  NULL
+  set.seed(seed)
+  shades <- sample_shades(6)
 
-ggsave(
-  filename = save_path(sys_id, sys_version, seed),
-  plot = pic,
-  width = 10,
-  height = 10,
-  dpi = 300
-)
+  perlin_circle_l <- lift_dl(perlin_circle)
+
+  n_grid <- 30
+  dat <- expand_grid(
+    cx = seq(1, 10, length.out = n_grid),
+    cy = seq(1, 10, length.out = n_grid),
+    r_min = .03,
+    r_max = .1,
+    octaves = 1:4
+  ) %>%
+    mutate(r_max = r_max + octaves/16) %>%
+    sample_frac(.2) %>%
+    transpose() %>%
+    imap_dfr(~ perlin_circle_l(.x) %>% mutate(id = .y))
+
+  # specify plot
+
+  pic <- dat %>%
+    ggplot(aes(x, y, group = id, fill = sample(id))) +
+    geom_polygon(size = 0, alpha = .5, show.legend = FALSE) +
+    theme_void() +
+    theme(plot.background = element_rect(fill = bg)) +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0)) +
+    scale_fill_gradientn(colours = shades) +
+    coord_fixed(xlim = xlim, ylim = ylim) +
+    NULL
+
+  # write image
+
+  ggsave(
+    filename = save_path(sys_id, sys_version, seed),
+    plot = pic,
+    width = 10,
+    height = 10,
+    dpi = 300
+  )
+
+}
 
