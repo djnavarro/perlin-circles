@@ -60,8 +60,8 @@ sys_id <- "perlincircle"
 sys_version <- 4
 
 bg <- "black"
-xlim <- c(-1, 12)
-ylim <- c(-1, 12)
+xlim <- c(1, 10)
+ylim <- c(1, 10)
 
 # generate image ----------------------------------------------------------
 
