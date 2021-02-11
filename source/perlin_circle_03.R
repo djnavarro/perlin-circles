@@ -75,10 +75,11 @@ dat <- expand_grid(
   cx = seq(1, 10, length.out = n_grid),
   cy = seq(1, 10, length.out = n_grid),
   r_min = .1,
-  r_max = .2,
+  r_max = .3,
   octaves = 1:4
 ) %>%
   mutate(r_max = r_max + octaves/16) %>%
+  sample_frac(.5) %>%
   transpose() %>%
   imap_dfr(~ perlin_circle_l(.x) %>% mutate(id = .y))
 
