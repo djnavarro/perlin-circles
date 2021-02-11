@@ -55,7 +55,7 @@ perlin_circle <- function(cx = 0, cy = 0, n = 100, noise_max = 0.5,
 
 # plot parameters ---------------------------------------------------------
 
-seed <- 4
+seed <- 11
 sys_id <- "perlincircle"
 sys_version <- 4
 
