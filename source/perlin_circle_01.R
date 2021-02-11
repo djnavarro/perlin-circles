@@ -33,6 +33,10 @@ save_path <- function(sys_id, sys_version, seed, fmt = ".png") {
 
 # the thing I want to play with -------------------------------------------
 
+# concept: Will Chase
+# source:  https://twitter.com/W_R_Chase/status/1359251137111744526
+# gist:    https://gist.github.com/djnavarro/a90265b0eed8dae9bad7052e7e3183d9
+
 perlin_circle <- function(cx = 0, cy = 0, n = 100, noise_max = 0.5,
                           octaves = 2, r_min = 0.5, r_max = 1) {
   tibble(
