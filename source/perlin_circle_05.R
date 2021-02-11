@@ -67,10 +67,13 @@ generate_scene <- function(seed) {
   xlim <- c(1, 10)
   ylim <- c(1, 10)
 
+  prop_keep <- runif(1, min = .1, max = .2)
+  n_colours <- sample(2:6, 1)
+
   # generate image data
 
   set.seed(seed)
-  shades <- sample_shades(6)
+  shades <- sample_shades(n_colours)
 
   perlin_circle_l <- lift_dl(perlin_circle)
 
@@ -83,7 +86,7 @@ generate_scene <- function(seed) {
     octaves = 1:4
   ) %>%
     mutate(r_max = r_max + octaves/16) %>%
-    sample_frac(.2) %>%
+    sample_frac(prop_keep) %>%
     transpose() %>%
     imap_dfr(~ perlin_circle_l(.x) %>% mutate(id = .y))
 
@@ -110,5 +113,14 @@ generate_scene <- function(seed) {
     dpi = 300
   )
 
+}
+
+
+# generate images ---------------------------------------------------------
+
+seeds <- 101:112
+for(s in seeds) {
+  cat("seed", s, "\n")
+  generate_scene(s)
 }
 
