@@ -69,11 +69,12 @@ set.seed(seed)
 
 perlin_circle_l <- lift_dl(perlin_circle)
 
+n_grid <- 10
 dat <- expand_grid(
-  cx = 1:10,
-  cy = 1:10,
-  r_min = .2,
-  r_max = .35,
+  cx = seq(1, 10, length.out = n_grid),
+  cy = seq(1, 10, length.out = n_grid),
+  r_min = .1,
+  r_max = .2,
   octaves = 1:4
 ) %>%
   transpose() %>%
