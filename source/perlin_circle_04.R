@@ -70,7 +70,7 @@ shades <- sample_shades(6)
 
 perlin_circle_l <- lift_dl(perlin_circle)
 
-n_grid <- 10
+n_grid <- 20
 dat <- expand_grid(
   cx = seq(1, 10, length.out = n_grid),
   cy = seq(1, 10, length.out = n_grid),
@@ -79,7 +79,7 @@ dat <- expand_grid(
   octaves = 1:4
 ) %>%
   mutate(r_max = r_max + octaves/16) %>%
-  sample_frac(.5) %>%
+  sample_frac(.2) %>%
   transpose() %>%
   imap_dfr(~ perlin_circle_l(.x) %>% mutate(id = .y))
 
