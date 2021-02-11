@@ -57,7 +57,7 @@ perlin_circle <- function(cx = 0, cy = 0, n = 100, noise_max = 0.5,
 
 seed <- 11
 sys_id <- "perlincircle"
-sys_version <- 4
+sys_version <- 5
 
 bg <- "black"
 xlim <- c(1, 10)
