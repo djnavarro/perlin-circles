@@ -61,19 +61,19 @@ generate_scene <- function(seed) {
   # plot parameters
 
   sys_id <- "perlincircle"
-  sys_version <- 6
+  sys_version <- 8
 
-  bg <- "antiquewhite"
   xlim <- c(1, 10)
   ylim <- c(1, 10)
 
-  prop_keep <- runif(1, min = .2, max = .3)
-  n_colours <- sample(2:6, 1)
+  prop_keep <- runif(1, min = .5, max = .6)
+  n_colours <- 3 #sample(2:6, 1)
 
   # generate image data
 
   set.seed(seed)
   shades <- sample_shades(n_colours)
+  bg <- shades[1]
 
   perlin_circle_l <- lift_dl(perlin_circle)
 
@@ -81,11 +81,13 @@ generate_scene <- function(seed) {
   dat <- expand_grid(
     cx = seq(1, 10, length.out = n_grid),
     cy = seq(1, 10, length.out = n_grid),
-    r_min = .03,
-    r_max = .1,
-    octaves = 1:4
+    r_min = .07,
+    r_max = .25,
+    n = 1000,
+    noise_max = .15,
+    octaves = 1:3
   ) %>%
-    mutate(r_max = r_max + octaves/16) %>%
+    mutate(r_max = r_max + octaves/10) %>%
     sample_frac(prop_keep) %>%
     transpose() %>%
     imap_dfr(~ perlin_circle_l(.x) %>% mutate(id = .y))
@@ -118,7 +120,7 @@ generate_scene <- function(seed) {
 
 # generate images ---------------------------------------------------------
 
-seeds <- 201:209
+seeds <- 401:409
 for(s in seeds) {
   cat("seed", s, "\n")
   generate_scene(s)
